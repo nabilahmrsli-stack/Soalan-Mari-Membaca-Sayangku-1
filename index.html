@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pengembaraan Kancil — Misi 12 Perkataan</title>
+<style>
+:root{--leaf:#174d34;--lime:#d9f4a6;--gold:#ffda76;--cream:#fff9e9;--ink:#173a2b;--red:#e33b40}*{box-sizing:border-box}body{margin:0;font-family:'Trebuchet MS',Verdana,sans-serif;color:var(--ink);background:radial-gradient(circle at 85% 4%,#f9e58b 0 5%,transparent 5.2%),linear-gradient(155deg,#6dc7b0 0%,#b6eac1 32%,#377e55 68%,#19472d 100%);min-height:100vh}body:before{content:'🌴       🌿       🌳       🌴       🌿';position:fixed;left:0;right:0;top:0;text-align:center;font-size:clamp(30px,6vw,90px);opacity:.3;pointer-events:none;z-index:0}.wrap{position:relative;max-width:1120px;margin:auto;padding:24px 16px 65px}header{text-align:center;color:white;text-shadow:0 3px 5px #16412d}header h1{font-size:clamp(30px,5vw,55px);margin:8px 0}header p{font-size:18px}.wood{background:linear-gradient(160deg,#bd813f,#895026);border:7px solid #6b3c20;border-radius:22px;box-shadow:0 9px 0 #49331b,0 14px 30px #173d2d50;padding:22px;margin-top:24px}.paper{background:var(--cream);border-radius:17px;padding:22px;box-shadow:inset 0 0 0 3px #e5d9b3}.nav{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin:20px 0}.nav button{background:#fff8df;color:#235239;border:3px solid #4e8c54}button{cursor:pointer;font:inherit;font-weight:800;border:0;border-radius:15px;padding:12px 18px;transition:transform .15s}button:hover{transform:translateY(-2px)}button:focus-visible,input:focus-visible{outline:4px solid #ff9e42;outline-offset:3px}.primary{background:#ffcd52;color:#4d321b;border:3px solid #a66b1d}.secondary{background:#dff5e4;border:2px solid #77a888}.danger{background:#ffe0df;border:2px solid #b9504d}.page{display:none}.page.active{display:block}.speech{font-size:19px;line-height:1.65;background:#fff5ca;border-left:7px solid #e9a12e;border-radius:14px;padding:15px;margin-bottom:18px}.stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center}.pill{background:#fef5cc;border:3px solid #6b944b;border-radius:99px;padding:7px 15px;font-weight:bold}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.card{background:#fff;border:4px solid #d5bb7a;border-radius:18px;padding:13px;text-align:center;min-width:0}.animal{font-size:clamp(45px,7vw,76px);line-height:1.3}.word{font-size:clamp(20px,3vw,31px);font-weight:900;letter-spacing:1px}.word .first{color:var(--red)}.word .rest{color:#1d2830}.choices{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin:16px 0}.choice{background:#fff;border:3px solid #7ba273;min-width:110px;font-size:22px}.choice.selected{background:#ffe18b;border-color:#d38c1d}.choice.correct{background:#b9f3b2;border-color:#258e3c}.choice.wrong{background:#ffd0c8;border-color:#d34942}.center{text-align:center}.feedback{min-height:34px;font-size:21px;font-weight:900;margin:12px 0}.progress{height:16px;background:#d5e4c5;border-radius:30px;overflow:hidden;margin:14px 0}.progress>div{height:100%;background:#6abb59;width:0%;transition:width .3s}.syllable{font-size:25px;background:#fdf3d4;border:3px solid #b28d50;margin:4px}.syllable.first{color:#d92c3a}.drop{border:3px dashed #8ca85e;border-radius:14px;min-height:70px;padding:12px;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:6px}.record-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.record-box{background:#fff;border:3px solid #d3c59a;border-radius:17px;padding:16px}input{font:inherit;font-size:20px;padding:12px;border:3px solid #86a975;border-radius:12px;width:100%;margin:8px 0 15px}video,audio{width:100%;margin:10px 0;border-radius:12px}video{background:#203f31;min-height:160px;max-height:240px;object-fit:contain}a.download{display:inline-block;background:#dcf3ce;padding:8px 12px;border-radius:10px;color:#174d34;font-weight:bold;margin-top:6px;font-size:14px}small{line-height:1.5;display:block}.footer{text-align:center;color:#f7ffe8;padding:20px}.hidden{display:none!important}
+
+/* Dashboard Guru Table Style */
+.teacher-table{width:100%;border-collapse:collapse;margin-top:12px;background:#fff;border-radius:10px;overflow:hidden;font-size:14px}
+.teacher-table th,.teacher-table td{border:1px solid #d3c59a;padding:8px;text-align:center;vertical-align:middle}
+.teacher-table th{background:#f3e8c7;color:#173a2b}
+.score-input{width:65px;padding:6px;font-size:15px;text-align:center;border:2px solid #86a975;border-radius:8px}
+
+@keyframes popUp { 0% { transform: scale(0.5); opacity: 0; } 70% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+.celebrate-pop { animation: popUp 0.4s ease-out; }
+@media(max-width:750px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.record-grid{grid-template-columns:1fr}.wood{padding:11px}.paper{padding:13px}.choice{min-width:90px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div style="font-size:55px">🌳🦌🌼🐊🌳</div>
+<h1>Pengembaraan Kancil</h1>
+<p>🌟 Misi 12 Perkataan — Mari Membaca Sayangku 🌟</p>
+</header>
+<div class="stats">
+<span class="pill">⭐ Bintang: <span id="stars">0</span></span>
+<span class="pill">🎯 Aktiviti Selesai: <span id="done">0</span>/2</span>
+<button class="primary" id="musicBtn" onclick="toggleBGM()" style="padding:6px 14px;font-size:14px">🔇 Muzik Hutan: Tutup</button>
+</div>
+<nav class="nav" aria-label="Pilih aktiviti">
+<button data-tab="home" class="active" onclick="show('home')">🏡 Mula</button>
+<button data-tab="match" onclick="show('match')">🖼️ Padankan</button>
+<button data-tab="syllables" onclick="show('syllables')">🧩 Suku Kata</button>
+<button data-tab="record" onclick="show('record')">🎙️ Misi Membaca</button>
+<button data-tab="teacher" onclick="show('teacher')">📋 Rekod Guru</button>
+</nav>
+
+<section class="page active wood" id="home">
+<div class="paper center">
+<div style="font-size:90px">🦌</div>
+<h2>Selamat datang, sahabat hutan!</h2>
+<div class="speech">“Wah, hebatnya kamu! Mari kita padankan gambar, susun suku kata dan buat Misi Membaca bersama-sama!”</div>
+<h3>Kenali 12 Perkataan</h3>
+<div class="grid" id="vocab"></div>
+<p><button class="primary" onclick="startBGMAndPlay('match')">🚀 Mulakan permainan!</button></p>
+</div>
+</section>
+
+<section class="page wood" id="match">
+<div class="paper center">
+<h2>🖼️ Misi 1: Padankan Gambar (6 Soalan)</h2>
+<p>Perhatikan gambar. Pilih perkataan yang betul.</p>
+<div class="progress"><div id="matchbar"></div></div>
+<p id="matchcount"></p>
+<div class="animal" id="matchpic"></div>
+<div class="choices" id="matchchoices"></div>
+<div class="feedback" id="matchfeedback" aria-live="polite"></div>
+<button class="secondary" onclick="resetMatch()">🔄 Main semula</button>
+</div>
+</section>
+
+<section class="page wood" id="syllables">
+<div class="paper center">
+<h2>🧩 Misi 2: Susun Suku Kata (6 Soalan)</h2>
+<p>Tekan suku kata mengikut urutan yang betul.</p>
+<div class="progress"><div id="syllbar"></div></div>
+<p id="syllcount"></p>
+<div class="animal" id="syllpic"></div>
+<div class="drop" id="assembled" aria-live="polite"></div>
+<div class="choices" id="syllchoices"></div>
+<div class="feedback" id="syllfeedback" aria-live="polite"></div>
+<button class="secondary" onclick="resetSyll()">🔄 Main semula</button>
+</div>
+</section>
+
+<section class="page wood" id="record">
+<div class="paper">
+<h2 class="center">🎤 Misi 3: Saya Boleh Membaca!</h2>
+<div class="speech">“Tahniah, sahabat hutan! Sila tulis nama kamu. Murid perlu membaca sekurang-kurangnya 6 hingga 12 perkataan, kemudian rakam suara dan rakam video bacaan/bahasa isyarat kamu.”</div>
+<label for="student">✏️ Nama murid</label>
+<input id="student" placeholder="Contoh: Ahmad" autocomplete="name">
+<div class="center">
+<p>Pilih perkataan untuk dibaca:</p>
+<div class="choices" id="readwords"></div>
+<h2 class="word" id="readtarget"></h2>
+<button class="secondary" onclick="speakCurrent()">🔊 Dengar sebutan</button>
+</div>
+<div class="record-grid">
+<div class="record-box">
+<h3>🎙️ Rakam Audio</h3>
+<p>Baca perkataan dengan jelas.</p>
+<button class="primary" id="audioStart" onclick="startRecord('audio')">⏺️ Mula rakam suara</button>
+<button class="danger" id="audioStop" onclick="stopRecord('audio')" disabled>⏹️ Henti</button>
+<div id="audioOutput"></div>
+</div>
+<div class="record-box">
+<h3>📹 Rakam Video</h3>
+<p>Gunakan bahasa isyarat & ekspresi muka.</p>
+<video id="preview" autoplay muted playsinline></video>
+<button class="primary" id="videoStart" onclick="startRecord('video')">⏺️ Mula rakam video</button>
+<button class="danger" id="videoStop" onclick="stopRecord('video')" disabled>⏹️ Henti</button>
+<div id="videoOutput"></div>
+</div>
+</div>
+<p id="recordStatus" class="feedback center" aria-live="polite"></p>
+<small>🔒 Rakaman disimpan dan direkodkan ke Panel Rekod Guru di atas.</small>
+<div class="center" style="margin-top:20px">
+<button class="primary" onclick="submitMission()">🏆 Hantar Tugasan & Selesai!</button>
+<div id="certificate" class="feedback"></div>
+</div>
+</div>
+</section>
+
+<!-- Panel Khas Dashboard Rekod Guru -->
+<section class="page wood" id="teacher">
+<div class="paper">
+<h2 class="center">📋 Panel Semakan Rekod Murid (Akses Guru)</h2>
+<div class="speech">“Cikgu boleh menyemak senarai murid yang telah merakam bacaan mereka, mendengar atau melihat semula rakaman, serta memuat turun fail di sini.”</div>
+<div style="overflow-x:auto;">
+<table class="teacher-table">
+<thead>
+<tr>
+<th>Nama Murid</th>
+<th>Skor Aktiviti (Auto: /12)</th>
+<th>Audio & Muat Turun</th>
+<th>Video & Muat Turun</th>
+<th>Skor Bacaan (Guru)</th>
+<th>Jumlah Markah</th>
+<th>Tindakan</th>
+</tr>
+</thead>
+<tbody id="teacherRecordList">
+<tr><td colspan="7" class="center">Tiada rekod murid tersimpan lagi.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="center" style="margin-top:15px">
+<button class="secondary" onclick="clearTeacherRecords()">🗑️ Kosongkan Senarai Rekod</button>
+</div>
+</div>
+</section>
+
+<div class="footer">🌸 Belajar sambil bermain • Mesra murid inklusif 🌸</div>
+</div>
+
+<script>
+const words=[
+  {w:'kuda',s:['ku','da'],e:'🐎'},
+  {w:'rusa',s:['ru','sa'],e:'🦌'},
+  {w:'boya',s:['bo','ya'],e:'🛟'},
+  {w:'gajah',s:['ga','jah'],e:'🐘'},
+  {w:'kucing',s:['ku','cing'],e:'🐈'},
+  {w:'burung',s:['bu','rung'],e:'🐦'},
+  {w:'kancil',s:['kan','cil'],e:'🦌'},
+  {w:'monyet',s:['mo','nyet'],e:'🐒'},
+  {w:'tupai',s:['tu','pai'],e:'🐿️'},
+  {w:'buaya',s:['bu','a','ya'],e:'🐊'},
+  {w:'kerbau',s:['ker','bau'],e:'🐃'},
+  {w:'harimau',s:['ha','ri','mau'],e:'🐅'}
+];
+
+const $=id=>document.getElementById(id);
+let stars=0, completed=new Set(), matchI=0, syllI=0, chosen=[], currentWord=0;
+let matchScore = 0, syllScore = 0;
+let teacherRecords = JSON.parse(localStorage.getItem('kancil_teacher_records_v2') || '[]');
+let currentAudioBlob = null, currentVideoBlob = null;
+let currentAudioUrl = '', currentVideoUrl = '';
+
+function formatStudentName(name) {
+  if (!name) return 'Tanpa Nama';
+  return name.trim().toLowerCase().replace(/(^\w{1})|(\s+\w{1})/g, match => match.toUpperCase());
+}
+
+// --- Web Audio API: Muzik Latar & Kesan Bunyi ---
+let audioCtx = null;
+let bgmInterval = null;
+let bgmPlaying = false;
+
+function initAudioContext() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+}
+
+function playTone(freq, duration, type='sine', delay=0) {
+  try {
+    initAudioContext();
+    setTimeout(() => {
+      if (!audioCtx) return;
+      let osc = audioCtx.createOscillator();
+      let gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }, delay);
+  } catch(e) {}
+}
+
+function playCorrectSound() {
+  playTone(523.25, 0.15, 'triangle', 0);
+  playTone(659.25, 0.15, 'triangle', 120);
+  playTone(783.99, 0.3, 'triangle', 240);
+  playTone(1046.50, 0.4, 'triangle', 360);
+}
+
+function playWrongSound() {
+  playTone(220, 0.2, 'sawtooth', 0);
+  playTone(196, 0.3, 'sawtooth', 150);
+}
+
+function startBGM() {
+  if (bgmPlaying) return;
+  initAudioContext();
+  bgmPlaying = true;
+  $('musicBtn').textContent = '🔊 Muzik Hutan: Buka';
+  const melody = [
+    {f: 330, d: 0.3}, {f: 392, d: 0.3}, {f: 440, d: 0.3}, {f: 523, d: 0.6},
+    {f: 440, d: 0.3}, {f: 392, d: 0.3}, {f: 330, d: 0.6},
+    {f: 293, d: 0.3}, {f: 349, d: 0.3}, {f: 392, d: 0.3}, {f: 440, d: 0.6},
+    {f: 392, d: 0.3}, {f: 349, d: 0.3}, {f: 330, d: 0.6}
+  ];
+  let step = 0;
+  bgmInterval = setInterval(() => {
+    if (!bgmPlaying) return;
+    let note = melody[step];
+    playTone(note.f, note.d, 'sine', 0);
+    step = (step + 1) % melody.length;
+  }, 400);
+}
+
+function stopBGM() {
+  bgmPlaying = false;
+  if (bgmInterval) clearInterval(bgmInterval);
+  $('musicBtn').textContent = '🔇 Muzik Hutan: Tutup';
+}
+
+function toggleBGM() {
+  if (bgmPlaying) stopBGM();
+  else startBGM();
+}
+
+function startBGMAndPlay(tabId) {
+  startBGM();
+  show(tabId);
+}
+
+function show(id){
+  document.querySelectorAll('.page').forEach(e=>e.classList.toggle('active',e.id===id));
+  document.querySelectorAll('[data-tab]').forEach(e=>e.classList.toggle('active',e.dataset.tab===id));
+  if(id==='teacher') renderTeacherTable();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function addStar(){
+  stars++;
+  $('stars').textContent=stars;
+  $('stars').classList.add('celebrate-pop');
+  setTimeout(()=>$('stars').classList.remove('celebrate-pop'), 400);
+}
+function finish(key){if(!completed.has(key)){completed.add(key);$('done').textContent=completed.size}addStar()}
+
+function say(w){
+  if(!('speechSynthesis'in window)){alert('Pelayar tidak menyokong bacaan automatik.');return}
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(w);
+  u.lang='ms-MY';
+  u.rate=.72;
+  speechSynthesis.speak(u);
+}
+
+function format(w){let x=words.find(v=>v.w===w);return `<span class="first">${x.s[0]}</span><span class="rest">${x.s.slice(1).join('')}</span>`}
+
+$('vocab').innerHTML=words.map(x=>`<div class="card"><div class="animal">${x.e}</div><div class="word">${format(x.w)}</div></div>`).join('');
+
+// --- Misi 1: Padankan (6 Soalan) ---
+function resetMatch(){ matchI=0; matchScore=0; renderMatch(); }
+function renderMatch(){
+  let activeWords = words.slice(0, 6);
+  let x = activeWords[matchI];
+  $('matchbar').style.width = (matchI/6*100) + '\%';$('matchfeedback').textContent = '';
+  if(!x){
+    $('matchpic').textContent = '🏆';
+    $('matchcount').textContent = '6/6';$('matchchoices').innerHTML = '<button class="primary" onclick="show(\'syllables\')">Terus ke Misi 2 ➜</button>';
+    $('matchfeedback').textContent = 'Bagus sekali!';
+    playCorrectSound();
+    finish('match');
+    return;
+  }
+  $('matchcount').textContent = `Soalan ${matchI+1} daripada 6`;
+  $('matchpic').textContent = x.e;
+  let opts = shuffle([x.w, ...shuffle(words.filter(v=>v.w!==x.w)).slice(0,3).map(v=>v.w)]);
+  $('matchchoices').innerHTML = opts.map(w=>`<button class="choice" onclick="answerMatch('${w}',this)">${w}</button>`).join('');
+}
+
+function answerMatch(w, b){
+  let activeWords = words.slice(0, 6);
+  if(w === activeWords[matchI].w){
+    b.classList.add('correct');
+    $('matchfeedback').textContent = 'Bagus sekali!';
+    playCorrectSound();
+    matchScore++;
+    addStar();
+    document.querySelectorAll('#matchchoices button').forEach(e=>e.disabled=true);
+    setTimeout(()=>{ matchI++; renderMatch(); }, 800);
+  }else{
+    b.classList.add('wrong');
+    $('matchfeedback').textContent = 'Cuba lagi, kamu pasti boleh!';
+    playWrongSound();
+    document.querySelectorAll('#matchchoices button').forEach(e=>e.disabled=true);
+    setTimeout(()=>{ matchI++; renderMatch(); }, 1000);
+  }
+}
+
+// --- Misi 2: Suku Kata (6 Soalan) ---
+function resetSyll(){ syllI=0; syllScore=0; chosen=[]; renderSyll(); }
+function renderSyll(){
+  let activeWords = words.slice(6, 12);
+  let x = activeWords[syllI];
+  $('syllbar').style.width = (syllI/6*100) + '%';
+  $('syllfeedback').textContent = '';$('assembled').innerHTML = '';
+  if(!x){
+    $('syllpic').textContent = '🎉';
+    $('syllcount').textContent = '6/6';$('syllchoices').innerHTML = '<button class="primary" onclick="show(\'record\')">Terus ke Misi Membaca ➜</button>';
+    $('syllfeedback').textContent = 'Bagus sekali!';
+    playCorrectSound();
+    finish('syllables');
+    return;
+  }
+  $('syllcount').textContent = `Perkataan ${syllI+1} daripada 6`;
+  $('syllpic').textContent = x.e;
+  chosen = [];
+  $('syllchoices').innerHTML = shuffle(x.s.map((s,i)=>({s,i}))).map(o=>`<button class="syllable" data-index="${o.i}" onclick="pickSyll(this)">${o.s}</button>`).join('');
+}
+
+function pickSyll(b){
+  let activeWords = words.slice(6, 12);
+  let x = activeWords[syllI], i = Number(b.dataset.index);
+  
+  if(i !== chosen.length){
+    $('syllfeedback').textContent = 'Cuba lagi, kamu pasti boleh!';
+    playWrongSound();
+    document.querySelectorAll('#syllchoices button').forEach(e=>e.disabled=true);
+    setTimeout(()=>{ syllI++; renderSyll(); }, 1100);
+    return;
+  }
+
+  chosen.push(i);
+  b.disabled = true;
+  b.style.opacity = '.4';
+  playTone(440, 0.1, 'sine');
+  $('assembled').innerHTML = chosen.map((n,j)=>`<span class="syllable ${j===0?'first':''}">${x.s[n]}</span>`).join('');
+  $('syllfeedback').textContent = 'Bagus, teruskan!';
+  
+  if(chosen.length === x.s.length){
+    $('syllfeedback').textContent = 'Bagus sekali!';
+    playCorrectSound();
+    syllScore++;
+    addStar();
+    setTimeout(()=>{ syllI++; renderSyll(); }, 1000);
+  }
+}
+
+// --- Misi Membaca ---
+function chooseWord(i){
+  currentWord = i;
+  $('readtarget').innerHTML = format(words[i].w);
+  document.querySelectorAll('#readwords button').forEach((b,j)=>b.classList.toggle('selected',i===j));
+}
+function speakCurrent(){ say(words[currentWord].w); }
+$('readwords').innerHTML = words.map((x,i)=>`<button class="choice" onclick="chooseWord(${i})">${x.e} ${x.w}</button>`).join('');
+chooseWord(0);
+
+const active = {audio:null, video:null};
+async function startRecord(type){
+  let name = $('student').value.trim();
+  if(!name){
+    $('recordStatus').textContent = '✏️ Sila isi nama dahulu.';
+    $('student').focus();
+    return;
+  }
+  if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder){
+    $('recordStatus').textContent = 'Pelayar ini tidak menyokong rakaman.';
+    return;
+  }
+  if(active[type]){
+    $('recordStatus').textContent = 'Hentikan rakaman yang sedang berjalan dahulu.';
+    return;
+  }
+  let stream;
+  try{
+    stream = await navigator.mediaDevices.getUserMedia(type==='video'?{audio:true,video:true}:{audio:true});
+  }catch(e){
+    $('recordStatus').textContent = 'Kebenaran kamera/mikrofon tidak diberikan.';
+    return;
+  }
+  try{
+    const chunks = [], rec = new MediaRecorder(stream);
+    active[type] = {rec, stream, chunks};
+    rec.ondataavailable = e => { if(e.data.size) chunks.push(e.data); };
+    rec.onstop = () => {
+      let blob = new Blob(chunks, {type: rec.mimeType || (type==='video'?'video/webm':'audio/webm')});
+      let url = URL.createObjectURL(blob);
+      let ext = blob.type.includes('mp4')?'mp4':blob.type.includes('ogg')?'ogg':'webm';
+      let safeName = name.replace(/[^a-zA-Z0-9_-]/g,'_');
+      let box = $(type+'Output');
+      box.innerHTML = '';
+      let media = document.createElement(type==='video'?'video':'audio');
+      media.controls = true;
+      media.src = url;
+      box.appendChild(media);
+      let a = document.createElement('a');
+      a.className = 'download';
+      a.href = url;
+      a.download = `Bacaan_${safeName}_${type}.${ext}`;
+      a.textContent = '⬇️ Muat turun';
+      box.appendChild(a);
+
+      if(type==='audio'){ currentAudioBlob = blob; currentAudioUrl = url; }
+      else { currentVideoBlob = blob; currentVideoUrl = url; }
+
+      stream.getTracks().forEach(t=>t.stop());
+      if(type==='video') $('preview').srcObject = null;
+      active[type] = null;
+      $('recordStatus').textContent = '✅ Rakaman ' + type + ' siap!';
+      playCorrectSound();
+    };
+    rec.start();
+    if(type==='video') $('preview').srcObject = stream;
+    $(type+'Start').disabled = true;
+    $(type+'Stop').disabled = false;
+    $('recordStatus').textContent = '🔴 Sedang merakam ' + type + '...';
+  }catch(e){
+    stream.getTracks().forEach(t=>t.stop());
+    $('recordStatus').textContent = 'Rakaman tidak dapat dimulakan.';
+  }
+}
+
+function stopRecord(type){
+  if(!active[type]) return;
+  $(type+'Start').disabled = false;
+  $(type+'Stop').disabled = true;
+  active[type].rec.stop();
+}
+
+function submitMission(){
+  let rawName = $('student').value.trim();
+  if(!rawName){
+    $('recordStatus').textContent = 'Sila isi nama dahulu, ya!';$('student').focus();
+    return;
+  }
+  let formattedName = formatStudentName(rawName);
+  let totalActivityScore = matchScore + syllScore;
+
+  let recordItem = {
+    name: formattedName,
+    activityScore: totalActivityScore,
+    audioUrl: currentAudioUrl || '',
+    videoUrl: currentVideoUrl || '',
+    readScore: '',
+    date: new Date().toLocaleDateString('ms-MY')
+  };
+  teacherRecords.push(recordItem);
+  localStorage.setItem('kancil_teacher_records_v2', JSON.stringify(teacherRecords));
+
+  playCorrectSound();
+  $('certificate').innerHTML = `<div class="celebrate-pop" style="background:#fff4cc;border:4px solid #e9a12e;border-radius:15px;padding:15px;margin-top:10px;">🏆 Tahniah, <b>${formattedName}</b>! Tugasan berjaya dihantar!<br><span style="font-size:17px;color:#173a2b;">Sila kembali ke Modul Mari Membaca Sayangku semula.</span> 🌟</div>`;
+}
+
+// --- Panel Guru ---
+function renderTeacherTable(){
+  let tbody = $('teacherRecordList');
+  if(teacherRecords.length === 0){
+    tbody.innerHTML = `<tr><td colspan="7" class="center">Tiada rekod murid tersimpan lagi. Sila buat rakaman di Misi Membaca.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = teacherRecords.map((r, index) => {
+    let readScoreNum = Number(r.readScore) || 0;
+    let totalMarks = Number(r.activityScore) + readScoreNum;
+    return `
+      <tr>
+        <td><b>${r.name}</b><br><small>${r.date}</small></td>
+        <td><b>${r.activityScore}</b> / 12</td>
+        <td>
+          ${r.audioUrl ? `<audio controls src="${r.audioUrl}" style="width:160px;height:35px"></audio><br><a class="download" href="${r.audioUrl}" download="Audio_${r.name}">⬇️ Muat Turun Audio</a>` : 'Tiada audio'}
+        </td>
+        <td>
+          ${r.videoUrl ? `<video controls src="${r.videoUrl}" style="width:160px;height:90px"></video><br><a class="download" href="${r.videoUrl}" download="Video_${r.name}">⬇️ Muat Turun Video</a>` : 'Tiada video'}
+        </td>
+        <td>
+          <input type="number" class="score-input" value="${r.readScore}" min="0" max="10" placeholder="0-10" onchange="updateReadScore(${index}, this.value)">
+        </td>
+        <td><b><span id="total_${index}">${totalMarks}</span></b></td>
+        <td>
+          <button class="danger" style="padding:6px 10px;font-size:13px" onclick="deleteRecord(${index})">Padam</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function updateReadScore(index, val){
+  teacherRecords[index].readScore = val;
+  localStorage.setItem('kancil_teacher_records_v2', JSON.stringify(teacherRecords));
+  let readNum = Number(val) || 0;
+  let actNum = Number(teacherRecords[index].activityScore) || 0;
+  $(`total_${index}`).textContent = actNum + readNum;
+}
+
+function deleteRecord(index){
+  if(confirm('Padam rekod murid ini?')){
+    teacherRecords.splice(index, 1);
+    localStorage.setItem('kancil_teacher_records_v2', JSON.stringify(teacherRecords));
+    renderTeacherTable();
+  }
+}
+
+function clearTeacherRecords(){
+  if(confirm('Adakah anda pasti mahu mengosongkan semua rekod murid?')){
+    teacherRecords = [];
+    localStorage.removeItem('kancil_teacher_records_v2');
+    renderTeacherTable();
+  }
+}
+
+resetMatch();
+resetSyll();
+</script>
+</body>
+</html>
